@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import telegram
 import os
 
@@ -29,14 +29,14 @@ def paystack_webhook():
 
         if telegram_username:
             try:
-                bot.invite_chat_member(chat_id=GROUP_CHAT_ID, user_id=f"@{telegram_username}")
+                bot.send_message(
+                    chat_id=GROUP_CHAT_ID,
+                    text=f"✅ {telegram_username}, your payment was successful! Welcome to the VIP group."
+                )
             except Exception as e:
-                print(f"Error: {e}")
-    return "OK", 200
+                print(f"Error sending message: {e}")
+    return jsonify({"status": "success"}), 200
 
 if __name__ == "__main__":
-    import os
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 if not provided
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
