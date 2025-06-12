@@ -39,7 +39,7 @@ def paystack_webhook():
     if data.get("event") == "charge.success":
         customer = data["data"].get("customer", {})
         metadata = data["data"].get("metadata", {})
-        telegram_username = metadata.get("telegram")
+        telegram_username = metadata.get("telegram_username")
 
         if telegram_username:
             try:
