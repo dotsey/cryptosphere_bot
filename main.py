@@ -29,7 +29,11 @@ def paystack_webhook():
     if data.get("event") == "charge.success":
         email = data["data"]["customer"]["email"]
         metadata = data["data"].get("metadata", {})
-        telegram_username = metadata.get("Telegram Username") or metadata.get("telegram_username")
+        telegram_username = (
+    metadata.get("telegram_username") or
+    metadata.get("Telegram Username") or
+    metadata.get("telegram")
+)
 
         print("METADATA:", metadata)
         print("TELEGRAM USERNAME:", telegram_username)
